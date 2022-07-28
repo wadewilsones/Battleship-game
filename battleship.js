@@ -4,6 +4,14 @@ const shipsChoice = document.querySelector('.ships-choice');
 
 const shipCollection = [];
 
+//Add click event to all UI Ships
+
+window.onload = () => {
+    displayUi();
+    const startGame = Gameboard();
+};
+
+
 // Ship function
 const Ship = (name, shipLength, x, y) => {
     
@@ -28,12 +36,7 @@ const Ship = (name, shipLength, x, y) => {
 
 const Gameboard = () => {
 
-   //Add drag and drop function to all UI ships
-    const addDrag = () => {   
-        for( let i = 0; i < shipsChoice.children.length; i++){
-            shipsChoice.children[i].addEventListener('dragstart', drag); // add drag event
-        }
-    }
+    //Call Ship function and create ship
 
     const createShip = (shipName, shipLength, x, y) => {
         const newShip = Ship(shipName, shipLength, x, y); // create a ship
@@ -41,7 +44,7 @@ const Gameboard = () => {
         console.log(shipCollection);
     }
 
-   return {addDrag, createShip, shipCollection }
+   return {createShip, shipCollection }
 
 }
 
@@ -61,85 +64,40 @@ const fillField = (whatToFill) => {
     }
 
     whatToFill.childNodes.forEach(element => {
-        element.setAttribute('class', 'cells')
+        element.setAttribute('class', 'cells');
         if(whatToFill.getAttribute('class') == 'player-field'){
-           //Assign drop zone
-           element.setAttribute('ondrop', 'drop(event)');
-           element.setAttribute('ondragover', 'ondragoverHandle(event)');
+            let siblings = [];
+
+            element.addEventListener('mouseover', function highlightShip(){
+                let shipSize = 5; // replace with ship Size
+                let sibling = element.nextSibling;
+
+                while(shipSize > 1){
+
+                    sibling.style.cssText = 'background-color:#21201f; border:2px solid black;';
+                    sibling = sibling.nextSibling;
+                    shipSize --;
+                }
+
+                element.style.cssText = 'border:2px solid black;';
+            })
+
+            element.addEventListener('mouseout', function cancelShip(){
+                let shipSize = 5; // replace with ship Size
+                let sibling = element.nextSibling;
+
+                while(shipSize > 1){
+
+                    sibling.style.cssText = 'background-color:tranparent;';
+                    sibling = sibling.nextSibling;
+                    shipSize --;
+                }
+
+            })
+                
+            
         }
-    });
-    
+    })
 
 
 }
-
-
-//drag and drop functionality
-
-const drag = (event) => {
-
-    event.dataTransfer.setData('text/plain', event.target.id);
-    event.dataTransfer.dropEffect = 'move';    
-}
-
-const drop = (event) => {
-    event.preventDefault();
-    const data = event.dataTransfer.getData('text/plain');
-    event.target.appendChild(document.getElementById(data));
-
-    // Call the shipFunction and assign data
-    let futureShip = document.getElementById(data);
-    const addShip = Gameboard();
-    let shipLength = getLength(futureShip.innerHTML);
-
-    //Get length and size 
-
-
-    addShip.createShip(futureShip.getAttribute('id'), shipLength, futureShip.getBoundingClientRect().x,  futureShip.getBoundingClientRect().y);
-
-}
-
-const ondragoverHandle = (event) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-}
-
-const getLength = (shipName) => {
-
-    let shipLength;
-    let shipsNumber;
-
-    switch(shipName){
-        case 'Carrier':
-            shipLength = 5;
-            shipsNumber = 1;
-            break;
-        case 'Battleship':
-            shipLength = 4;
-            shipsNumber = 1;
-            break;
-        case 'Cruiser':
-            shipLength = 3;
-            shipsNumber = 2;
-            break;
-        case 'Submarine':
-            shipLength = 2;
-            shipsNumber = 3;
-            break;
-        case 'Destroyer':
-            shipLength = 1;
-            shipsNumber = 4;
-            break;                            
-    }
-
-    return shipLength
-}
-
-//Add click event to all UI Ships
-
-window.onload = () => {
-    displayUi();
-    const startGame = Gameboard();
-    startGame.addDrag();
-};
-
