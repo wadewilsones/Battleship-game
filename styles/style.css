@@ -1,0 +1,83 @@
+body{
+  
+    margin: 0;
+    padding: 0 ;
+    font-family: 'Coming Soon', sans-serif ;
+    
+}
+
+header{
+    box-shadow: 10px 10px 10px rgba(59, 58, 58, 0.144);
+    background-color: rgb(255, 255, 255);
+    color:black;
+    border-radius: 5px;
+    margin-bottom: 2em;
+    width:100%;
+    top:0%;
+    position: fixed;
+    z-index: 99;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-family: 'Coming Soon', sans-serif ;
+
+}
+
+header p{
+
+    font-size: 2em;
+   
+}
+
+header nav ul{
+    display: flex;
+}
+
+header nav ul li{
+
+    list-style-type: none;
+    margin-left: 40px;
+    font-size: 1.4em;
+    color: black;
+    transition: 0.1s all;  
+    cursor: pointer;
+    border-bottom: none;
+}
+
+
+header nav ul li:hover{
+    padding-bottom: 2px;
+    border-bottom:  1px dashed rgb(32, 32, 32);
+}
+main{
+    display: flex;
+}
+section{
+    background-image: url('../assets/bg2.png');
+    background-size:80%;
+    background-position-y: 140px;
+    background-position-x: -60px;
+    background-repeat: no-repeat;
+    height: 100vh;
+    transition: 0.5s all;
+    width: 70%;
+
+}
+
+a{
+    font-size: 5em;
+    text-decoration: none;
+    position: absolute;
+    top:50%;
+    right:15%;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    transition: 0.6s all;
+
+}
+
+a:hover{
+    color: rgb(22, 58, 136);
+    transform: scale(1.2);
+    transform: rotate(195deg);
+}
